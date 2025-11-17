@@ -1,7 +1,7 @@
 import streamlit as st
-from src.pcap_analysis import load_flows, flag_suspicious_downloads, detect_beaconing, summarize_suspicious
-from src.log_analysis import load_firewall_logs
-from src.threat_intel import enrich_with_threat_intel
+from pcap_analysis import load_flows, flag_suspicious_downloads, detect_beaconing, summarize_suspicious
+from log_analysis import load_firewall_logs
+from threat_intel import enrich_with_threat_intel
 
 st.title("🕵️ FlowSleuth - Network DFIR Dashboard")
 
