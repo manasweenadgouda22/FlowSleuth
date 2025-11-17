@@ -1,4 +1,4 @@
-"""Configuration and simple constants for FlowSleuth."""
+"""Configuration and simple constants for FlowSleuth DFIR."""
 
 # File column expectations
 FLOW_REQUIRED_COLUMNS = [
@@ -16,18 +16,12 @@ FIREWALL_REQUIRED_COLUMNS = [
     "dst_ip",
     "dst_port",
     "action",     # ALLOW / BLOCK
-    "reason"      # reason or rule explanation for decision
+    "rule_name"
 ]
 
-# Ports commonly associated with file exfiltration & remote control
+# Threat heuristics and detection thresholds
+HIGH_RISK_EXTENSIONS = [".exe", ".dll", ".bat", ".ps1", ".sh", ".zip", ".rar"]
 SUSPICIOUS_PORTS = [21, 22, 23, 445, 3389, 5900]  # FTP, SSH, Telnet, SMB, RDP, VNC
 
-# High-risk file types for malware delivery
-HIGH_RISK_EXTENSIONS = [
-    ".exe", ".dll", ".bat", ".ps1", ".sh", ".vbs", ".jar", ".apk"
-]
-
-# Thresholds for heuristics
-MIN_BYTES_FOR_DOWNLOAD = 50_000          # Minimum size to suspect file transfer
-MIN_CONNECTIONS_FOR_BEACON = 5           # Same IP repeated in short intervals
-BEACON_TIME_WINDOW_SEC = 120             # Beaconing analysis timeframe
+MIN_BYTES_FOR_DOWNLOAD = 40_000         # Large data downloads
+MIN_CONNECTIONS_FOR_BEACON = 5          # Repeated contact with same host
