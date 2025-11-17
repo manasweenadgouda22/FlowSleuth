@@ -53,4 +53,20 @@ if flow_file:
     st.dataframe(suspicious, use_container_width=True)
 
     beacon = detect_beaconing(flows)
-    st.subheader("📡 Possible Beacon
+    st.subheader("📡 Possible Beaconing Behavior")
+    st.dataframe(beacon, use_container_width=True)
+
+    st.subheader("📊 Summary Stats")
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Total Flows", len(flows))
+    col2.metric("Suspicious", len(suspicious))
+    col3.metric("Beaconing", len(beacon))
+
+
+# ===== Firewall Logs ===== #
+if fw_file:
+    st.markdown("---")
+    st.markdown("### 🧱 Firewall Logs")
+
+    fw = load_firewall_logs(fw_file)
+    st.dataframe(fw, use_container_width=True)
