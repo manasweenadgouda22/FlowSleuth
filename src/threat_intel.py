@@ -1,6 +1,11 @@
 import pandas as pd
 
-def enrich_with_threat_intel(df: pd.DataFrame) -> pd.DataFrame:
-    bad_ips = {"185.199.110.153": "Known C2 Server", "45.155.205.233": "Malware Host"}
-    df["threat_label"] = df["dst_ip"].map(bad_ips).fillna("Unknown")
+def enrich_with_threat_intel(df):
+    if df.empty:
+        return df
+
+    df = df.copy()
+    df["threat_label"] = df["dst_ip"].apply(
+        lambda ip: "KNOWN BOTNET" if ip.startswith("45.") else "UNKNOWN"
+    )
     return df
