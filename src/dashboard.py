@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+
 from pcap_analysis import load_flows, flag_suspicious_downloads, detect_beaconing, summarize_suspicious
 from log_analysis import load_firewall_logs, correlate_with_flows
 from threat_intel import enrich_with_threat_intel
