@@ -1,0 +1,5 @@
+timestamp,src_ip,dst_ip,dst_port,action,rule_name
+2025-11-16T13:10:02,172.30.0.2,202.20.3.10,80,BLOCK,Block_Suspicious_Downloads
+2025-11-16T13:11:22,172.30.0.2,10.0.0.5,445,ALLOW,Allow_Internal_SMB
+2025-11-16T13:11:03,172.30.0.2,8.8.8.8,53,ALLOW,Allow_DNS
+2025-11-16T13:12:06,172.30.0.2,202.20.3.10,80,BLOCK,Block_Suspicious_Downloads
