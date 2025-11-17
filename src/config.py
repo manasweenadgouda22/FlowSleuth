@@ -1,6 +1,6 @@
-"""Configuration and simple constants for FlowSleuth DFIR."""
+"""Configuration and constants for FlowSleuth DFIR."""
 
-# File column expectations
+# Flow record required schema
 FLOW_REQUIRED_COLUMNS = [
     "timestamp",
     "src_ip",
@@ -10,18 +10,20 @@ FLOW_REQUIRED_COLUMNS = [
     "bytes"
 ]
 
+# Firewall log required schema
 FIREWALL_REQUIRED_COLUMNS = [
     "timestamp",
     "src_ip",
     "dst_ip",
     "dst_port",
-    "action",     # ALLOW / BLOCK
+    "action",     # ALLOW/BLOCK
     "rule_name"
 ]
 
-# Threat heuristics and detection thresholds
-HIGH_RISK_EXTENSIONS = [".exe", ".dll", ".bat", ".ps1", ".sh", ".zip", ".rar"]
-SUSPICIOUS_PORTS = [21, 22, 23, 445, 3389, 5900]  # FTP, SSH, Telnet, SMB, RDP, VNC
+# Suspicious indicators
+HIGH_RISK_EXTENSIONS = [".exe", ".dll", ".bat", ".ps1", ".sh"]
+SUSPICIOUS_PORTS = [21, 22, 23, 445, 3389]  # FTP/SSH/Telnet/SMB/RDP
 
-MIN_BYTES_FOR_DOWNLOAD = 40_000         # Large data downloads
-MIN_CONNECTIONS_FOR_BEACON = 5          # Repeated contact with same host
+# Detection thresholds
+MIN_BYTES_FOR_DOWNLOAD = 50_000
+MIN_CONNECTIONS_FOR_BEACON = 5
