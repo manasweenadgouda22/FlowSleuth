@@ -1,0 +1,49 @@
+/* ===== FlowSleuth Dark SOC Theme ===== */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&display=swap');
+
+html, body, [class*="block-container"] {
+    background-color: #0b0f19 !important;
+    color: #e6f1ff !important;
+    font-family: "JetBrains Mono", monospace !important;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background-color: #111727 !important;
+    border-right: 1px solid #1f2a40;
+}
+
+/* Titles */
+h1, h2, h3 {
+    color: #00e5ff !important;
+    text-shadow: 0px 0px 8px rgba(0, 229, 255, 0.5);
+}
+
+/* Metrics boxes */
+div[data-testid="metric-container"] {
+    background-color: #111727 !important;
+    border: 1px solid #1e293b !important;
+    border-radius: 8px !important;
+    padding: 10px !important;
+}
+
+/* Buttons */
+.stButton>button {
+    background-color: #00e5ff !important;
+    color: #000 !important;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.stButton>button:hover {
+    background-color: #19b8d6 !important;
+    color: #000 !important;
+}
+
+/* Tables */
+thead tr th {
+    background-color: #111727 !important;
+    color: #00e5ff !important;
+}
+tbody tr td {
+    background-color: #0f1525 !important;
+}
