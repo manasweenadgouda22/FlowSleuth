@@ -1,76 +1,183 @@
-# FlowSleuth
 
-FlowSleuth is a mini DFIR/network-forensics project that analyzes **suspicious outbound connections**
-by correlating packet captures (PCAP metadata), router/firewall logs, and threat‑intelligence lookups.
-It also provides a simple **Streamlit dashboard** to visualize suspicious flows for demos and interviews.
+# 🕵️‍♂️ FlowSleuth
 
-## Features
+### Network DFIR & Threat Intelligence Dashboard
 
-- Upload PCAP metadata (exported as CSV from Wireshark or Zeek) and firewall/router logs.
-- Automatically flag suspicious outbound connections:
-  - Executable / script downloads (`.exe`, `.dll`, `.ps1`, `.sh`, etc.).
-  - Connections to non‑standard ports or uncommon destinations.
-  - Repeated beacon‑style connections from the same host.
-- Basic threat‑intel enrichment via placeholder hooks (ready for VirusTotal / AbuseIPDB / OTX).
-- Streamlit dashboard:
-  - Summary KPIs (total flows, unique IPs, # flagged suspicious).
-  - Interactive tables of suspicious connections.
-  - Simple bar chart of top suspicious destination IPs.
-- Designed so you can easily extend it into a **full Master’s project** with:
-  - More sophisticated ML‑based anomaly detection.
-  - Cloud deployment (e.g., AWS EC2 + S3).
-  - Integration with Zeek and Suricata logs.
+FlowSleuth is an interactive **Streamlit-based DFIR (Digital Forensics & Incident Response) dashboard** designed to help analysts triage potential malicious network activity. The platform ingests **network flow logs** and **firewall logs**, flags suspicious traffic patterns, and enriches findings with **basic threat intelligence indicators**.
 
-## Quick Start
+This project is intended as an academic and learning-focused tool for students, cybersecurity beginners, and DFIR enthusiasts.
 
-1. Create and activate a virtual environment:
+---
 
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+## 🎯 Project Objectives
 
-2. Install dependencies:
+FlowSleuth aims to:
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+✔ Support rapid investigation of network flow data
+✔ Detect suspicious downloads and potentially malicious outbound transfers
+✔ Identify repeat beaconing behavior, which may indicate C2 (Command & Control) activity
+✔ Enrich suspicious IPs with open threat intelligence feeds (simulated)
+✔ Provide structured network visibility for DFIR/Blue Team practice
 
-3. Prepare input data:
-   - Export Wireshark or Zeek flows as CSV (at minimum: `src_ip`, `dst_ip`, `dst_port`, `protocol`, `bytes`, `timestamp`).
-   - Put sample files in the `data/` folder or upload via the Streamlit UI.
+---
 
-4. Run the dashboard:
+## 🧪 Key Features
 
-   ```bash
-   streamlit run src/dashboard.py
-   ```
+| Feature                           | Description                                                      |
+| --------------------------------- | ---------------------------------------------------------------- |
+| 📥 CSV Upload                     | Accepts **Flow Logs** & **Firewall Logs** (CSV format)           |
+| 🚨 Suspicious Activity Detection  | Flags abnormal outbound transfers & risky file types             |
+| 📡 Beaconing Detection            | Identifies repeated periodic connections                         |
+| 🛡 Firewall Log Viewer            | Displays firewall ALLOW/BLOCK events                             |
+| 🌐 Threat Intelligence Enrichment | Simulated enrichment for known malicious IPs/domains             |
+| 🎨 Modern UI                      | Styled Streamlit interface for easy use (custom theme supported) |
 
-5. Open the local URL shown in the console (usually http://localhost:8501) to explore the dashboard.
+---
 
-## Project Structure
+## 📌 Data Requirements
 
-```text
-FlowSleuth/
-├── README.md
-├── requirements.txt
-├── src/
-│   ├── dashboard.py          # Streamlit UI
-│   ├── pcap_analysis.py      # PCAP/flow CSV parsing & heuristics
-│   ├── log_analysis.py       # Firewall/router log parsing
-│   ├── threat_intel.py       # Threat-intel lookup stubs
-│   └── config.py             # Simple config & constants
-├── data/
-│   ├── sample_flows.csv      # Example flow data
-│   └── sample_firewall.csv   # Example firewall log
-└── docs/
-    ├── Project_Report_Outline.md
-    └── Incident_Report_Template.md
+### 1️⃣ Flow Log CSV (Required columns)
+
+| Column name | Type            | Example            |
+| ----------- | --------------- | ------------------ |
+| `timestamp` | datetime string | `2025-01-14 10:01` |
+| `src_ip`    | IPv4            | `10.0.0.5`         |
+| `dst_ip`    | IPv4            | `185.199.108.153`  |
+| `dst_port`  | integer         | `443`              |
+| `bytes`     | integer         | `245000`           |
+| `file_type` | string          | `zip`              |
+
+Sample rows:
+
+```csv
+timestamp,src_ip,dst_ip,dst_port,bytes,file_type
+2025-01-14 10:01,10.0.0.5,185.199.108.153,443,245000,zip
+2025-01-14 10:03,10.0.0.8,172.64.150.22,80,180000,exe
 ```
 
-## How to Talk About This in Interviews
+---
 
-- Emphasize that you:
-  - Designed the pipeline to **correlate PCAP, router artifacts, and firewall logs**.
-  - Built an **interactive dashboard** for triage and visualization.
-  - Left clear extension points for **ML‑based anomaly detection** and **threat‑intel enrichment**.
+### 2️⃣ Firewall Log CSV (Required columns)
+
+| Column name | Type                   | Example            |
+| ----------- | ---------------------- | ------------------ |
+| `timestamp` | datetime string        | `2025-01-14 10:02` |
+| `src_ip`    | IPv4                   | `10.0.0.5`         |
+| `dst_ip`    | IPv4                   | `185.199.108.153`  |
+| `action`    | string (`ALLOW/BLOCK`) | `BLOCK`            |
+
+Sample rows:
+
+```csv
+timestamp,src_ip,dst_ip,action
+2025-01-14 10:02,10.0.0.5,185.199.108.153,BLOCK
+2025-01-14 10:06,10.0.0.8,172.64.150.22,ALLOW
+```
+
+---
+
+## 🚀 Running the Dashboard
+
+### Option A: Run Locally
+
+#### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/manasweenadgouda22/FlowSleuth.git
+cd FlowSleuth
+```
+
+#### 2️⃣ Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+#### 3️⃣ Launch Streamlit
+
+```bash
+streamlit run src/dashboard.py
+```
+
+---
+
+### Option B: Run on Streamlit Cloud (Recommended)
+
+The app is deployed at:
+
+🔗 **[https://flowsleuth-](https://flowsleuth-)<your-instance>.streamlit.app**
+*(Link may vary based on deployment URL.)*
+
+---
+
+## 🧠 Detection Logic Summary
+
+FlowSleuth uses simple heuristics for learning purposes:
+
+| Detection                | Logic Example                                                  |
+| ------------------------ | -------------------------------------------------------------- |
+| **Suspicious Downloads** | Large outbound traffic + risky file type (`exe`, `zip`, `dll`) |
+| **Beaconing**            | Same `src_ip` → `dst_ip` repeatedly within short intervals     |
+| **Threat Intel Match**   | Checks destination IP/domain in simulated IOC list             |
+
+This is **not a production detection engine**, but a practical introduction to network-based DFIR analysis.
+
+---
+
+## 📚 Technologies Used
+
+| Component       | Technology                     |
+| --------------- | ------------------------------ |
+| UI Framework    | Streamlit                      |
+| Processing      | Python (Pandas, Regex)         |
+| Visualization   | Streamlit native tables        |
+| Threat Intel    | Simulated lookups (extendable) |
+| Version Control | Git & GitHub                   |
+
+---
+
+## 📦 Project Structure
+
+```
+FlowSleuth/
+├── data/                     # Sample CSV files
+├── docs/                     # Report templates
+├── src/
+│   ├── dashboard.py          # Streamlit UI
+│   ├── config.py             # Analyzer settings
+│   ├── pcap_analysis.py      # Flow processing logic
+│   ├── log_analysis.py       # Firewall parser
+│   └── threat_intel.py       # Threat enrichment simulation
+└── requirements.txt
+```
+
+---
+
+## 🧩 Possible Enhancements
+
+🔧 PCAP ingestion + automated CSV transformation
+🌐 Real threat intelligence integration (VirusTotal, GreyNoise, AbuseIPDB)
+📊 Visualizations: Sankey, GeoIP maps, time-series charts
+🧵 Multi-user dashboards with case management
+🐍 ML-based anomaly detection
+
+---
+
+## 🏫 Academic Usage & Citation
+
+This project may be referenced in academic coursework and cybersecurity labs. Suggested citation format (APA):
+
+> Nadgouda, M. B. (2025). *FlowSleuth: Network DFIR & Threat Intelligence Dashboard* [Software]. GitHub. [https://github.com/manasweenadgouda22/FlowSleuth](https://github.com/manasweenadgouda22/FlowSleuth)
+
+---
+
+
+---
+
+## 📄 License
+
+This project is for **educational and research purposes only**.
+Not intended for production SOC/IR operations.
+
+---
+
