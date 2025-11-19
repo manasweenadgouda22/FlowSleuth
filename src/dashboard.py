@@ -7,6 +7,8 @@ from log_analysis import load_firewall_logs
 from threat_intel import enrich_with_threat_intel
 import pandas as pd
 
+st.set_page_config(layout="wide")
+
 # Apply custom CSS
 with open(os.path.join(os.path.dirname(__file__), "style.css")) as f:
     st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
