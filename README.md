@@ -179,12 +179,3 @@ These can be added anytime:
 * Role-based access
 
 ---
-
-
-
-📌 **Short portfolio description**
-📄 **Resume bullet points (ATS-optimized)**
-📣 **LinkedIn announcement post**
-🎨 **Logo + branding elements**
-
-Just tell me **“Give portfolio version”** or **“Give resume bullets.”**
