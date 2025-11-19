@@ -172,12 +172,4 @@ This project may be referenced in academic coursework and cybersecurity labs. Su
 ---
 
 
----
-
-## 📄 License
-
-This project is for **educational and research purposes only**.
-Not intended for production SOC/IR operations.
-
----
 
